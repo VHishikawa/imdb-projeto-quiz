@@ -14,9 +14,27 @@ services:
       - "8000:8000"
     depends_on:
       - redis
+      - postgres
     networks:
       - backend
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 networks:
   backend:
     driver: bridge
+
+volumes:
+  postgres_data:

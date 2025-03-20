@@ -1,3 +1,4 @@
-fastapi==0.95.1
-uvicorn==0.22.0
-redis==4.3.4
+fastapi
+uvicorn
+SQLAlchemy
+psycopg2-binary
