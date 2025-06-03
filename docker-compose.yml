@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   redis:
     image: redis:latest
@@ -7,30 +9,32 @@ services:
     networks:
       - backend
 
-  fastapi:
-    build: .
-    container_name: fastapi
-    ports:
-      - "8000:8000"
-    depends_on:
-      - redis
-      - postgres
-    networks:
-      - backend
-
   postgres:
     image: postgres:latest
     container_name: postgres
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_DB: mydb
     ports:
       - "5432:5432"
-    networks:
-      - backend
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  fastapi:
+    build: .
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/mydb
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - backend
 
 networks:
   backend:
