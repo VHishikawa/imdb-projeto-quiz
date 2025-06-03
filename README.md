@@ -6,7 +6,7 @@ API desenvolvida com **FastAPI** para gerenciar questões e respostas de quiz, u
 
 ## ⚙️ Configuração
 
-1. **Suba um container Redis**  
+1. **Suba os containers**  
    ```sh
    docker-compose up -d 
    ```
